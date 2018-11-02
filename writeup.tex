@@ -21,7 +21,12 @@ use document.cookie as parameter
 When we navigate to the profile page we are given a form to update the users avatar and age. However, there is also an input that is hidden on the page. The way this is done in the application is using CSS to make the input hidden, but this doesnt stop attackers from modifying the input on their developer console and removing the style which would display the textbox. The original HTML is displayed bellow \\
 $<$ input type="text" class="input" style="display:none" id="username" name="username" value="{{ username }}"$>$ \\
 In order to fix this problem we could validate the that username in the form is the username of the person who is currently using the session. We could also completely remove the field and just use the username that is stored with the session and process the request using that username. There is no reason to post the username with the form if we can access it with the session cookie.
-\subsection{}
+\subsection{Wall Other User XSS}
+In the path for localhost:5000/wall/$<$other-user$>$ the server code does not escape HTML for the username, so it is vunerable to a XSS attack. This is an issue because if you enter a img tag with a bad src url and an onerror tag with malicious javascript then it will be posted in the no\_wall.html page and run the script in the onerror tag. This could be used as a reflected XSS attack where an attacker could post a link to a wall with one of these img scripts as the other-username and then steal a users cookies. When the server checks to see that the user exists and it fails it will then render the no\_wall page using: \\
+	return render\_template('no\_wall.html', username=other\_username) \\
+Then the no\_wall.html will render this user name in the HTML tag:\\
+$<$ h1$>$ class="title"  No wall for \{\{ username \}\}! $<$ \/h1 $>$\\
+This will render the $<$img src="sfddfs" onerror="alert()" $>$ on the page allowing the attacker to run any code they want. In order to fix this exploit we should escape the HTML of the other-username that gets passes into the URL. This will prevent the attacker from being able to create this malicious URL that can be then used as a reflected XSS.
 \section{Other Issues}
 
 \section{Mandatory Feedback}
