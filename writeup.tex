@@ -13,7 +13,9 @@
 \maketitle
 
 \section{Weaponizing the Vunerability}
+Opening the developer console on any logged in account for Snapitterbook, we can perform a SQL injection using the document.cookie variable.  We know there exists a user named dirks, because there exists two existing posts on the site from dirks.  Because Session ID is used to verify which user is present, we can exploit this by injecting sql into the developer console that spoofs the current username.  This allows us to trick the browser into thinking we are the user dirks.  We now have the ability to post on dirks's wall which any user can visit from the home page.  Using this, we can post a script on dirks's wall that is invisible to the user and performs a request to a malicious website by updating the document.location variable to a maliciouwith the document.cookie appended to the request.  The malicious site would receive the cookie, store it, and then redirect the user back to the original page they were on to mask the fact that they were redirected.  This would all occur immediately and the user would not be aware.
 
+use document.cookie as parameter
 \section{Vulnerability Writeup}
 \subsection{Hidden Field Profile Page}
 When we navigate to the profile page we are given a form to update the users avatar and age. However, there is also an input that is hidden on the page. The way this is done in the application is using CSS to make the input hidden, but this doesnt stop attackers from modifying the input on their developer console and removing the style which would display the textbox. The original HTML is displayed bellow \\
