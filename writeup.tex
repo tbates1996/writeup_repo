@@ -15,7 +15,11 @@
 \section{Weaponizing the Vunerability}
 
 \section{Vulnerability Writeup}
-
+\subsection{Hidden Field Profile Page}
+When we navigate to the profile page we are given a form to update the users avatar and age. However, there is also an input that is hidden on the page. The way this is done in the application is using CSS to make the input hidden, but this doesnt stop attackers from modifying the input on their developer console and removing the style which would display the textbox. The original HTML is displayed bellow \\
+$<$ input type="text" class="input" style="display:none" id="username" name="username" value="{{ username }}"$>$ \\
+In order to fix this problem we could validate the that username in the form is the username of the person who is currently using the session. We could also completely remove the field and just use the username that is stored with the session and process the request using that username. There is no reason to post the username with the form if we can access it with the session cookie.
+\subsection{}
 \section{Other Issues}
 
 \section{Mandatory Feedback}
