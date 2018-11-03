@@ -28,6 +28,9 @@ Then the no\_wall.html will render this user name in the HTML tag:\\
 $<$ h1$>$ class="title"  No wall for \{\{ username \}\}! $<$ \/h1 $>$\\
 This will render the $<$img src="sfddfs" onerror="alert()" $>$ on the page allowing the attacker to run any code they want. In order to fix this exploit we should escape the HTML of the other-username that gets passes into the URL. This will prevent the attacker from being able to create this malicious URL that can be then used as a reflected XSS.
 \section{Other Issues}
+We can create a malicious site which has a form that the user could fill out which has a hidden post request back to Snapitterbook.  By observing the structure of post requests on snapitterbook, an adversary could exploit the structure in their own post request.  The form on the malicious site would disable the referrer header so that it avoids the CSRF detection in server.py.  Observing the server.py file, on line 44 we request the referer header in order to protect all of our functions against CSRF attack.  This could be protected authentication tokens that are sent alongside the post.
+
+
 
 \section{Mandatory Feedback}
 I think that the project as a whole was great; however, it can be improved by teaching us a little more about how to preform exploits outside of what is covered in class. I feel that we learn about the vunerabilies, but it would be nice to see more examples of how it's done in practice. Our favorite part of the project was using the SESSION\_ID cookies to do a SQL Injection to gain access to dirks account. It helped show how dangerous SQL injection attacks could be. In addition to that I was interesting to see how you could take this information and try to find exploits on actual website without having the source code.
